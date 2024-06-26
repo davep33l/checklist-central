@@ -1,1 +1,1 @@
-web: gunicorn tickit_config.wsgi
+web: gunicorn config.wsgi
