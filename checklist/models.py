@@ -69,3 +69,42 @@ class TaskTemplate(models.Model):
 
     def __str__(self):
         return self.task_template_name
+    
+
+class ChecklistInstance(models.Model):
+    checklist_instance_checklist_template = models.ForeignKey(ChecklistTemplate, on_delete=models.CASCADE, related_name='checklist_instance_checklist_template')
+    checklist_instance_created_on = models.DateTimeField(auto_now_add=True)
+    checklist_instance_created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='checklist_instance_created_by')
+
+    class Meta:
+        verbose_name_plural = 'Checklist Instances'
+        verbose_name = 'Checklist Instance'
+
+    def __str__(self):
+        return self.checklist_instance_checklist_template.checklist_template_name
+    
+
+class TaskInstance(models.Model):
+
+    STATUS = (
+        ('Not Started', 'Not Started'),
+        ('Awaiting Verification', 'Awaiting Verification'),
+        ('Completed', 'Completed'),
+    )
+
+    task_instance_task_template = models.ForeignKey(TaskTemplate, on_delete=models.CASCADE, related_name='task_instance_task_template')
+    task_instance_processed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_processed_by')
+    task_instance_processed_on = models.DateTimeField(auto_now=True)
+    task_instance_processor_notes = models.TextField()
+    task_instance_verified_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_verified_by')
+    task_instance_verified_on = models.DateTimeField(auto_now=True)
+    task_instance_verifier_notes = models.TextField()
+    task_instance_status = models.CharField(max_length=100, choices=STATUS, default='Not Started')
+
+    class Meta:
+        verbose_name_plural = 'Task Instances'
+        verbose_name = 'Task Instance'
+
+    def __str__(self):
+        return self.task_instance_task_template.task_template_name
+
