@@ -57,7 +57,7 @@ class TaskTemplate(models.Model):
     task_template_name = models.CharField(max_length=100)
     task_template_description = models.TextField()
     task_template_checklist_template = models.ForeignKey(ChecklistTemplate, on_delete=models.CASCADE, related_name='task_template_checklist_template')
-    task_template_due_at = models.DateTimeField()
+    task_template_due_at = models.TimeField()
     task_template_created_on = models.DateTimeField(auto_now_add=True)
     task_template_created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_template_created_by')
     task_template_updated_on = models.DateTimeField(auto_now=True)
