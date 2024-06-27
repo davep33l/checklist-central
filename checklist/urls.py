@@ -20,6 +20,13 @@ urlpatterns = [
     path('checklist_templates/new/', views.ChecklistTemplateCreate.as_view(), name='checklist_template_new'),
     
     path('task_templates/', views.TaskTemplateList.as_view(), name='task_templates'),
+    path('task_templates/<int:pk>/', views.TaskTemplateEdit.as_view(), name='task_template_edit'),
+    path('task_templates/<int:pk>/delete/', views.TaskTemplateDelete.as_view(), name='task_template_delete'),
+    path('task_templates/new/', views.TaskTemplateCreate.as_view(), name='task_template_new'),
+
+
+
+
     path('checklist_instances/', views.ChecklistInstanceList.as_view(), name='checklist_instances'),
     path('task_instances/', views.TaskInstanceList.as_view(), name='task_instances'),
 ]

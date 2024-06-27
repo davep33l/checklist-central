@@ -146,11 +146,79 @@ class ChecklistTemplateDelete(SuccessMessageMixin, DeleteView):
     success_message = "Checklist deleted successfully"
     context_object_name = 'checklist_template'
 
-
-
 class TaskTemplateList(generic.ListView):
     model = TaskTemplate
     template_name = 'checklist/task_template_list.html'
+    context_object_name = 'task_templates'
+
+class TaskTemplateEdit(SuccessMessageMixin, UpdateView):
+    model = TaskTemplate
+    fields = ['name', 'description', 'due_at', 'checklist_template']
+    template_name = 'checklist/task_template_edit.html'
+    success_url = reverse_lazy('task_templates')
+    success_message = "Task updated successfully"
+    context_object_name = 'task_template'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['checklist_templates'] = ChecklistTemplate.objects.all()
+        return context
+    
+    def form_valid(self, form):
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
+    
+
+class TaskTemplateCreate(SuccessMessageMixin, CreateView):
+    model = TaskTemplate
+    fields = ['name', 'checklist_template', 'description']
+    template_name = 'checklist/task_template_edit.html'
+    success_url = reverse_lazy('task_templates')
+    success_message = "Task created successfully"
+    context_object_name = 'task_template'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['checklist_templates'] = ChecklistTemplate.objects.all()
+        return context
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
+    
+
+class TaskTemplateDelete(SuccessMessageMixin, DeleteView):
+    model = TaskTemplate
+    template_name = 'checklist/task_template_confirm_delete.html'
+    success_url = reverse_lazy('task_templates')
+    success_message = "Task deleted successfully"
+    context_object_name = 'task_template'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class ChecklistInstanceList(generic.ListView):

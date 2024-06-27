@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Task Template Edit{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Task Template Edit</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Task Template Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ task_template.name }}">
+                    <label for="description">Task Template Description</label>
+                    <input type="text" class="form-control" id="description" name="description" value="{{ task_template.description }}">                    
+                    <label for="due_at">Task Template due at</label>
+                    <input type="time" class="form-control" id="due_at" name="due_at" value="{{ task_template.due_at|time:'H:i' }}">
+                    <label for="checklist_template">Checklist Template Name</label>
+                    <select class="form-select" id="checklist_template" name="checklist_template">
+                        {% for checklist in checklist_templates %}
+                        <option value="{{ checklist.id }}" {% if checklist.id == task.checklist.id %} selected {% endif %}>{{ checklist.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>  
+    </div>
+</div>
+
+
+{% endblock %}

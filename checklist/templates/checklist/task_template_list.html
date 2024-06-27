@@ -1,38 +1,47 @@
 {% extends 'base.html' %}
+{% block title %}Task Templates{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Task Templates{% endblock %}</title>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Task Templates</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Task Description</th>
+                        <th>Checklist</th>
+                        <th>Team</th>
+                        <th>Department</th>
+                        <th>Due at</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in task_templates %}
+                    <tr>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.checklist_template.name }}</td>
+                        <td>{{ task.checklist_template.team.name }}</td>
+                        <td>{{ task.checklist_template.team.department.name }}</td>
+                        <td>{{ task.due_at }}</td>
+                        <td>
+                            <a href="{% url 'task_template_edit' task.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'task_template_delete' task.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'task_template_new' %}" class="btn btn-success">Add New</a>
+        </div>
+    </div>
 
-</head>
 
-<body>
 
-    {% block content %}
 
-    <h1>Task Templates list</h1>
 
-    {% if object_list %}
-    {% for task_template in object_list %}
-    <h2>Task Template Name: {{ task_template.name }}</h2>
-    <p>Task Template Description: {{ task_template.description }}</p>
-    <p>Parent Checklist Template: {{ task_template.checklist_template.name }}</p>
-    <p>Parent Team: {{ task_template.checklist_template.team.name }}</p>
-    <p>Parent Department: {{ task_template.checklist_template.team.department.name }}</p>
-    <!-- due at -->
-    <p>Due at: {{ task_template.due_at }}</p>
-    {% endfor %}
-    {% else %}
-    <h2>Nothing here</h2>
-    {% endif %}
-
-    {% endblock %}
-
-</body>
-
-</html>
+{% endblock %}
