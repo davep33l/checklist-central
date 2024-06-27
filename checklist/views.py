@@ -171,7 +171,7 @@ class TaskTemplateEdit(SuccessMessageMixin, UpdateView):
 
 class TaskTemplateCreate(SuccessMessageMixin, CreateView):
     model = TaskTemplate
-    fields = ['name', 'checklist_template', 'description']
+    fields = ['name', 'checklist_template', 'description', 'due_at']
     template_name = 'checklist/task_template_edit.html'
     success_url = reverse_lazy('task_templates')
     success_message = "Task created successfully"
