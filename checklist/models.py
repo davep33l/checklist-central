@@ -50,6 +50,7 @@ class ChecklistTemplate(models.Model):
     class Meta:
         verbose_name_plural = 'Checklist Templates'
         verbose_name = 'Checklist Template'
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -94,13 +95,14 @@ class TaskInstance(models.Model):
     )
 
     task_template = models.ForeignKey(TaskTemplate, on_delete=models.CASCADE, related_name='task_instance_task_template')
-    processed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_processed_by')
-    processed_on = models.DateTimeField(auto_now=True)
-    processor_notes = models.TextField()
-    verified_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_verified_by')
-    verified_on = models.DateTimeField(auto_now=True)
-    verifier_notes = models.TextField()
+    processed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_processed_by', null=True, blank=True)
+    processed_on = models.DateTimeField(auto_now=True, null=True, blank=True)
+    processor_notes = models.TextField(null=True, blank=True)
+    verified_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_verified_by', null=True, blank=True)
+    verified_on = models.DateTimeField(auto_now=True, null=True, blank=True)
+    verifier_notes = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=100, choices=STATUS, default='Not Started')
+    checklist_instance = models.ForeignKey(ChecklistInstance, on_delete=models.CASCADE, related_name='task_instance_checklist_instance', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Task Instances'

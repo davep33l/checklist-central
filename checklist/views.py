@@ -4,6 +4,8 @@ from .models import Department, Team, ChecklistTemplate, TaskTemplate, Checklist
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
+from django.contrib import messages
 
 
 # Create your views here.
@@ -196,27 +198,24 @@ class TaskTemplateDelete(SuccessMessageMixin, DeleteView):
     context_object_name = 'task_template'
 
 
+def initialise_checklists(request):
 
+    checklist_templates = ChecklistTemplate.objects.all()
 
+    if request.method == 'POST':
+        checklist = ChecklistTemplate.objects.get(pk=request.POST['checklist_template'])
+        new_instance = ChecklistInstance(checklist_template=checklist, created_by=request.user)
+        new_instance.save()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        tasks = TaskTemplate.objects.filter(checklist_template=checklist)
+        for task in tasks:
+            print(task)
+            new_task_instance = TaskInstance(task_template=task, checklist_instance=new_instance)
+            new_task_instance.save()
+            
+        messages.success(request, 'Checklist initialised successfully.')
+        return redirect('index')
+    return render(request, 'checklist/initialise_checklists.html', context={'checklist_templates': checklist_templates})
 
 
 
