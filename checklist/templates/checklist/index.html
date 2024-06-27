@@ -4,45 +4,52 @@
 <h1>Home page</h1>
 
 <p>Add all the home page stuff here</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Tasks</h1>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Checklist</th>
+                            <th>Task</th>
+                            <th>Task Description</th>
+                            <th>Team</th>
+                            <th>Department</th>
+                            <th>Due at</th>
+                            <th>Processed by</th>
+                            <th>Processed on</th>
+                            <th>Processor Notes</th>
+                            <th>Verified by</th>
+                            <th>Verified on</th>
+                            <th>Verifier Notes</th>
+                            <th>Status</th>
 
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>Checklist</th>
-            <th>Task</th>
-            <th>Task Description</th>
-            <th>Team</th>
-            <th>Department</th>
-            <th>Due at</th>
-            <th>Processed by</th>
-            <th>Processed on</th>
-            <th>Processor Notes</th>
-            <th>Verified by</th>
-            <th>Verified on</th>
-            <th>Verifier Notes</th>
-            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task_instance in task_instances %}
+                        <tr>
+                            <td>{{ task_instance.task_template.checklist_template.name }}</td>
+                            <td>{{ task_instance.task_template.name }}</td>
+                            <td>{{ task_instance.task_template.description }}</td>
+                            <td>{{ task_instance.task_template.checklist_template.team.name }}</td>
+                            <td>{{ task_instance.task_template.checklist_template.team.department.name }}</td>
+                            <td>{{ task_instance.task_template.due_at }}</td>
+                            <td>{{ task_instance.processed_by }}</td>
+                            <td>{{ task_instance.processed_at }}</td>
+                            <td>{{ task_instance.processor_notes }}</td>
+                            <td>{{ task_instance.verified_by }}</td>
+                            <td>{{ task_instance.verified_at }}</td>
+                            <td>{{ task_instance.verifier_notes }}</td>
+                            <td>{{ task_instance.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
 
-        </tr>
-    </thead>
-    <tbody>
-        {% for task_instance in task_instances %}
-        <tr>
-            <td>{{ task_instance.task_template.checklist_template.name }}</td>
-            <td>{{ task_instance.task_template.name }}</td>
-            <td>{{ task_instance.task_template.description }}</td>
-            <td>{{ task_instance.task_template.checklist_template.team.name }}</td>
-            <td>{{ task_instance.task_template.checklist_template.team.department.name }}</td>
-            <td>{{ task_instance.task_template.due_at }}</td>
-            <td>{{ task_instance.processed_by }}</td>
-            <td>{{ task_instance.processed_at }}</td>
-            <td>{{ task_instance.processor_notes }}</td>
-            <td>{{ task_instance.verified_by }}</td>
-            <td>{{ task_instance.verified_at }}</td>
-            <td>{{ task_instance.verifier_notes }}</td>
-            <td>{{ task_instance.status }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
 {% endblock %}

@@ -4,7 +4,7 @@ from .models import Department, Team, ChecklistTemplate, TaskTemplate, Checklist
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -36,7 +36,7 @@ class DepartmentDelete(SuccessMessageMixin, DeleteView):
     success_message = "Department deleted successfully"
 
 
-class DepartmentCreate(SuccessMessageMixin, CreateView, LoginRequiredMixin):
+class DepartmentCreate(SuccessMessageMixin, CreateView):
     model = Department
     fields = ['name']
     template_name = 'checklist/department_edit.html'
@@ -79,7 +79,7 @@ class TeamDelete(SuccessMessageMixin, DeleteView):
     success_message = "Team deleted successfully"
 
 
-class TeamCreate(SuccessMessageMixin, CreateView, LoginRequiredMixin):
+class TeamCreate(SuccessMessageMixin, CreateView):
     model = Team
     fields = ['name', 'department']
     template_name = 'checklist/team_edit.html'
