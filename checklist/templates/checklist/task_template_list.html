@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Templates</title>
+</head>
+
+<body>
+    <h1>Task Templates list</h1>
+
+    {% if object_list %}
+    {% for task_template in object_list %}
+    <h2>Task Template Name: {{ task_template.task_template_name }}</h2>
+    <p>Task Template Description: {{ task_template.task_template_description }}</p>
+    <p>Parent Checklist Template: {{ task_template.task_template_checklist_template.checklist_template_name }}</p>
+    <p>Parent Team: {{ task_template.task_template_checklist_template.checklist_template_team.team_name }}</p>
+    <p>Parent Department: {{ task_template.task_template_checklist_template.checklist_template_team.team_department.department_name }}</p>
+    <!-- due at -->
+    <p>Due at: {{ task_template.task_template_due_at }}</p>
+    {% endfor %}
+    {% else %}
+    <h2>Nothing here</h2>
+    {% endif %}
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Instances</title>
+</head>
+
+<body>
+    <h1>Task Instances list</h1>
+
+    {% if object_list %}
+    {% for task_instance in object_list %}
+    <h2>Task Instance Name: {{ task_instance.task_instance_name }}</h2>
+    <!-- task id -->
+    <p>Task Instance ID: {{ task_instance.id }}</p>
+    <p>Task Instance Description: {{ task_instance.task_instance_description }}</p>
+    <p>Parent Task Template: {{ task_instance.task_instance_task_template.task_template_name }}</p>
+    <p>Parent Checklist Template: {{ task_instance.task_instance_task_template.task_template_checklist_template.checklist_template_name }}</p>
+    <p>Parent Team: {{ task_instance.task_instance_task_template.task_template_checklist_template.checklist_template_team.team_name }}</p>
+    <p>Parent Department: {{ task_instance.task_instance_task_template.task_template_checklist_template.checklist_template_team.team_department.department_name }}</p>
+    <p>Due at: {{ task_instance.task_instance_task_template.task_template_due_at }}</p>
+    <p>Task Instance Status: {{ task_instance.task_instance_status }}</p>
+    <!-- processed by and notes -->
+    <p>Processed by: {{ task_instance.task_instance_processed_by }}</p>
+    <p>Notes: {{ task_instance.task_instance_processor_notes }}</p>
+    <!-- verified by and notes -->
+    <p>Verified by: {{ task_instance.task_instance_verified_by }}</p>
+    <p>Notes: {{ task_instance.task_instance_verifier_notes }}</p>
+
+    {% endfor %}
+    {% else %}
+    <h2>Nothing here</h2>
+    {% endif %}
+
+</body>
+
+</html>

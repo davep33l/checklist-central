@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams</title>
+</head>
+
+<body>
+    <h1>Teams list</h1>
+    {% for team in object_list %}
+    <h2>Team Name: {{ team.team_name }}</h2>
+    <p>Team Description: {{ team.team_description }}</p>
+    <!-- parent department -->
+    <p>Parent Department: {{ team.team_department.department_name }}</p>
+    {% endfor %}
+</body>
+
+</html>

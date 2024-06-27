@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Instances</title>
+</head>
+
+<body>
+    <h1>Checklist Instances list</h1>
+
+    {% if object_list %}
+    {% for checklist_instance in object_list %}
+    <h2>Checklist Instance Name: {{ checklist_instance.checklist_instance_checklist_template.checklist_template_name }}</h2>
+    <!-- id -->
+    <p>Checklist Instance ID: {{ checklist_instance.id }}</p>
+    <p>Checklist Instance Description: {{ checklist_instance.checklist_instance_checklist_template.checklist_template_description }}</p>
+    <p>Parent Checklist Template: {{ checklist_instance.checklist_instance_checklist_template.checklist_template_name }}</p>
+    <p>Parent Team: {{ checklist_instance.checklist_instance_checklist_template.checklist_template_team.team_name }}</p>
+    <p>Parent Department: {{ checklist_instance.checklist_instance_checklist_template.checklist_template_team.team_department.department_name }}</p>
+
+    {% endfor %}
+    {% else %}
+    <h2>Nothing here</h2>
+    {% endif %}
+
+</body>
+
+</html>
