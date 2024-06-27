@@ -2,25 +2,53 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from .models import Department, Team, ChecklistTemplate, TaskTemplate, ChecklistInstance, TaskInstance
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 def index(request):
     task_instances = TaskInstance.objects.all()
-
-    context = {
-        'task_instances': task_instances,
-    }
-
-
-
-    # render the index.html page
+    context = {'task_instances': task_instances,}
     return render(request, 'checklist/index.html', context)
 
 
 class DepartmentList(generic.ListView):
     model = Department
+    context_object_name = 'departments'
     template_name = 'checklist/department_list.html'
+
+
+class DepartmentEdit(SuccessMessageMixin, UpdateView):
+    model = Department
+    fields = ['name']
+    template_name = 'checklist/department_edit.html'
+    context_object_name = 'department'
+    success_url = reverse_lazy('departments')
+    success_message = "Department updated successfully"
+
+
+class DepartmentDelete(SuccessMessageMixin, DeleteView):
+    model = Department
+    template_name = 'checklist/department_confirm_delete.html'
+    success_url = reverse_lazy('departments')
+    success_message = "Department deleted successfully"
+
+
+class DepartmentCreate(SuccessMessageMixin, CreateView, LoginRequiredMixin):
+    model = Department
+    fields = ['name']
+    template_name = 'checklist/department_edit.html'
+    success_url = reverse_lazy('departments')
+    success_message = "Department created successfully"
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
+
 
 
 class TeamList(generic.ListView):

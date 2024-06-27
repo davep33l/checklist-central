@@ -5,6 +5,9 @@ urlpatterns = [
 
     path('', views.index, name='index'),
     path('departments/', views.DepartmentList.as_view(), name='departments'),
+    path('departments/<int:pk>/', views.DepartmentEdit.as_view(), name='department_edit'),
+    path('departments/<int:pk>/delete/', views.DepartmentDelete.as_view(), name='department_delete'),
+    path('departments/new/', views.DepartmentCreate.as_view(), name='department_new'),
     path('teams/', views.TeamList.as_view(), name='teams'),
     path('checklist_templates/', views.ChecklistTemplateList.as_view(), name='checklist_templates'),
     path('task_templates/', views.TaskTemplateList.as_view(), name='task_templates'),

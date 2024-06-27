@@ -12,12 +12,34 @@
 
 <body>
     {% block content %}
-    <h1>Departments list</h1>
-    {% for department in object_list %}
-    <h2>Department Name: {{ department.name }}</h2>
-    <p>Department Description: {{ department.description }}</p>
-    {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Departments</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Department Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for department in departments %}
+                        <tr>
+                            <td>{{ department.name }}</td>
+                            <td>
+                                <a href="{% url 'department_edit' department.id %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'department_delete' department.id %}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'department_new' %}" class="btn btn-success">Add New</a>
+            </div>
+        </div>
     {% endblock %}
 </body>
 
 </html>
+
