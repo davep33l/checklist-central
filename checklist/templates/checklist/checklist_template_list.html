@@ -11,10 +11,10 @@
 <body>
     <h1>Checklist Templates list</h1>
     {% for checklist_template in object_list %}
-    <h2>Checklist Template Name: {{ checklist_template.checklist_template_name }}</h2>
-    <p>Checklist Template Description: {{ checklist_template.checklist_template_description }}</p>
-    <p>Parent Department: {{ checklist_template.checklist_template_team.team_department.department_name }}</p>
-    <p>Parent Team: {{ checklist_template.checklist_template_team.team_name }}</p>
+    <h2>Checklist Template Name: {{ checklist_template.name }}</h2>
+    <p>Checklist Template Description: {{ checklist_template.description }}</p>
+    <p>Parent Department: {{ checklist_template.team.department.name }}</p>
+    <p>Parent Team: {{ checklist_template.team.name }}</p>
     {% endfor %}
 </body>
 

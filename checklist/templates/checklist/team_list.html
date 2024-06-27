@@ -11,10 +11,10 @@
 <body>
     <h1>Teams list</h1>
     {% for team in object_list %}
-    <h2>Team Name: {{ team.team_name }}</h2>
-    <p>Team Description: {{ team.team_description }}</p>
+    <h2>Team Name: {{ team.name }}</h2>
+    <p>Team Description: {{ team.description }}</p>
     <!-- parent department -->
-    <p>Parent Department: {{ team.team_department.department_name }}</p>
+    <p>Parent Department: {{ team.department.name }}</p>
     {% endfor %}
 </body>
 

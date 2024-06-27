@@ -11,8 +11,8 @@
 <body>
     <h1>Departments list</h1>
     {% for department in object_list %}
-    <h2>Department Name: {{ department.department_name }}</h2>
-    <p>Department Description: {{ department.department_description }}</p>
+    <h2>Department Name: {{ department.name }}</h2>
+    <p>Department Description: {{ department.description }}</p>
     {% endfor %}
 </body>
 
