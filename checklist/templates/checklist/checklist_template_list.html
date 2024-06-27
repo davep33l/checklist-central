@@ -1,26 +1,41 @@
 {% extends 'base.html' %}
+{% block title %}Checklist Templates{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Checklist Templates{% endblock %}</title>
-</head>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Checklist Templates</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Checklist Name</th>
+                        <th>Team</th>
+                        <th>Department</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for checklist in checklist_templates %}
+                    <tr>
+                        <td>{{ checklist.name }}</td>
+                        <td>{{ checklist.team.name }}</td>
+                        <td>{{ checklist.team.department.name }}</td>
+                        <td>
+                            <a href="{% url 'checklist_template_edit' checklist.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'checklist_template_delete' checklist.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'checklist_template_new' %}" class="btn btn-success">Add New</a>
+        </div>
+    </div>
 
-<body>
 
-    {% block content %}
-    <h1>Checklist Templates list</h1>
-    {% for checklist_template in object_list %}
-    <h2>Checklist Template Name: {{ checklist_template.name }}</h2>
-    <p>Checklist Template Description: {{ checklist_template.description }}</p>
-    <p>Parent Department: {{ checklist_template.team.department.name }}</p>
-    <p>Parent Team: {{ checklist_template.team.name }}</p>
-    {% endfor %}
-    {% endblock %}
-</body>
 
-</html>
+
+
+{% endblock %}

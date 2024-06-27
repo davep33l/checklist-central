@@ -100,6 +100,52 @@ class TeamCreate(SuccessMessageMixin, CreateView):
 class ChecklistTemplateList(generic.ListView):
     model = ChecklistTemplate
     template_name = 'checklist/checklist_template_list.html'
+    context_object_name = 'checklist_templates'
+
+
+class ChecklistTemplateEdit(SuccessMessageMixin, UpdateView):
+    model = ChecklistTemplate
+    fields = ['name', 'team']
+    template_name = 'checklist/checklist_template_edit.html'
+    success_url = reverse_lazy('checklist_templates')
+    success_message = "Checklist updated successfully"
+    context_object_name = 'checklist_template'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['teams'] = Team.objects.all()
+        return context
+    
+    def form_valid(self, form):
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
+
+class ChecklistTemplateCreate(SuccessMessageMixin, CreateView):
+    model = ChecklistTemplate
+    fields = ['name', 'team']
+    template_name = 'checklist/checklist_template_edit.html'
+    success_url = reverse_lazy('checklist_templates')
+    success_message = "Checklist created successfully"
+    context_object_name = 'checklist_template'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['teams'] = Team.objects.all()
+        return context
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
+    
+    
+class ChecklistTemplateDelete(SuccessMessageMixin, DeleteView):
+    model = ChecklistTemplate
+    template_name = 'checklist/checklist_template_confirm_delete.html'
+    success_url = reverse_lazy('checklist_templates')
+    success_message = "Checklist deleted successfully"
+    context_object_name = 'checklist_template'
+
 
 
 class TaskTemplateList(generic.ListView):
