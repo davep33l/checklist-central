@@ -111,3 +111,14 @@ class TaskInstance(models.Model):
     def __str__(self):
         return self.task_template.name
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # list of departments user can have access to
+    departments = models.ManyToManyField(Department, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Profiles'
+        verbose_name = 'Profile'
+
+    def __str__(self):
+        return self.user.username

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Department, Team, ChecklistTemplate, TaskTemplate, ChecklistInstance, TaskInstance
+from .models import Department, Team, ChecklistTemplate, TaskTemplate, ChecklistInstance, TaskInstance, Profile
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -11,7 +11,22 @@ from django.contrib import messages
 # Create your views here.
 
 def index(request):
-    task_instances = TaskInstance.objects.all()
+
+    if not request.user.is_authenticated:
+        return render(request, 'checklist/index.html')
+
+    if request.user.is_superuser:
+        task_instances = TaskInstance.objects.all()
+        context = {'task_instances': task_instances,}
+        return render(request, 'checklist/index.html', context)
+    
+    if not Profile.objects.filter(user=request.user).exists():
+        return render(request, 'checklist/index.html')
+
+    profile = Profile.objects.get(user=request.user)
+    departments = profile.departments.all()
+
+    task_instances = TaskInstance.objects.filter(task_template__checklist_template__team__department__in=departments)
     context = {'task_instances': task_instances,}
     return render(request, 'checklist/index.html', context)
 
