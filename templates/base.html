@@ -1,5 +1,8 @@
 {% load static %}
 
+{% url 'account_login' as login_url %}
+{% url 'account_logout' as logout_url %}
+
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
@@ -63,6 +66,18 @@
                         <li><a class="dropdown-item" href="{% url 'teams' %}">Teams</a></li>
                     </ul>
                 </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                </li>
+                {% endif %}
+
+
 
             </ul>
             <div class="ms-auto text-light">
