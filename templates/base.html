@@ -1,5 +1,3 @@
-{% url 'checklist' as home_url %}
-
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
@@ -21,7 +19,39 @@
 
 </head>
 
-<h1>Base Template</h1>
+<!-- bootstrap navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Checklist Central</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'departments' %}">Departments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teams' %}">Teams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'checklist_templates' %}">Checklist Templates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'checklist_instances' %}">Task Instances</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task_templates' %}">Task Templates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'task_instances' %}">Task Instances</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
 
 {% block content %}{% endblock %}
 

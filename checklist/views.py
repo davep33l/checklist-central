@@ -6,7 +6,9 @@ from .models import Department, Team, ChecklistTemplate, TaskTemplate, Checklist
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the checklist index.")
+    # render the index.html page
+    return render(request, 'checklist/index.html')
+
 
 class DepartmentList(generic.ListView):
     model = Department
