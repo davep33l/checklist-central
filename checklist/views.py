@@ -6,8 +6,16 @@ from .models import Department, Team, ChecklistTemplate, TaskTemplate, Checklist
 # Create your views here.
 
 def index(request):
+    task_instances = TaskInstance.objects.all()
+
+    context = {
+        'task_instances': task_instances,
+    }
+
+
+
     # render the index.html page
-    return render(request, 'checklist/index.html')
+    return render(request, 'checklist/index.html', context)
 
 
 class DepartmentList(generic.ListView):
