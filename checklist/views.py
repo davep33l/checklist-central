@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.views import generic
 from .models import Department, Team, ChecklistTemplate, TaskTemplate, ChecklistInstance, TaskInstance
 from django.urls import reverse_lazy
@@ -50,10 +49,52 @@ class DepartmentCreate(SuccessMessageMixin, CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-
 class TeamList(generic.ListView):
     model = Team
     template_name = 'checklist/team_list.html'
+    context_object_name = 'teams'
+    ordering = ['-name']
+
+
+class TeamEdit(SuccessMessageMixin, UpdateView):
+    model = Team
+    fields = ['name', 'department']
+    template_name = 'checklist/team_edit.html'
+    success_url = reverse_lazy('teams')
+    success_message = "Team updated successfully"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['departments'] = Department.objects.all()
+        return context
+    
+    def form_valid(self, form):
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
+
+class TeamDelete(SuccessMessageMixin, DeleteView):
+    model = Team
+    template_name = 'checklist/team_confirm_delete.html'
+    success_url = reverse_lazy('teams')
+    success_message = "Team deleted successfully"
+
+
+class TeamCreate(SuccessMessageMixin, CreateView, LoginRequiredMixin):
+    model = Team
+    fields = ['name', 'department']
+    template_name = 'checklist/team_edit.html'
+    success_url = reverse_lazy('teams')
+    success_message = "Team created successfully"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['departments'] = Department.objects.all()
+        return context
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)
 
 
 class ChecklistTemplateList(generic.ListView):
