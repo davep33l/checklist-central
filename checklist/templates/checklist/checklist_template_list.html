@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,10 +7,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checklist Templates</title>
+    <title>{% block title %}Checklist Templates{% endblock %}</title>
 </head>
 
 <body>
+
+    {% block content %}
     <h1>Checklist Templates list</h1>
     {% for checklist_template in object_list %}
     <h2>Checklist Template Name: {{ checklist_template.name }}</h2>
@@ -16,6 +20,7 @@
     <p>Parent Department: {{ checklist_template.team.department.name }}</p>
     <p>Parent Team: {{ checklist_template.team.name }}</p>
     {% endfor %}
+    {% endblock %}
 </body>
 
 </html>

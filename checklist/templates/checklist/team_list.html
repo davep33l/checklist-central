@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teams</title>
+    <title>{% block title %}Teams{% endblock %}</title>
+
 </head>
 
 <body>
+    {% block content %}
     <h1>Teams list</h1>
     {% for team in object_list %}
     <h2>Team Name: {{ team.name }}</h2>
@@ -16,6 +21,7 @@
     <!-- parent department -->
     <p>Parent Department: {{ team.department.name }}</p>
     {% endfor %}
+    {% endblock %}
 </body>
 
 </html>
