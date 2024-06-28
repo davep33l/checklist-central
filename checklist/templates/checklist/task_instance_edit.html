@@ -18,7 +18,7 @@
 </div>
 {% elif task_instance.status == 'Awaiting Verification' %}
 
-{% if task_instance.processed_by == user.username %}
+{% if task_instance.processed_by.username == user.username %}
 <div class="container">
     <div class="row">
         <div class="col-md-12">
