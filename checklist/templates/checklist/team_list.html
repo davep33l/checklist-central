@@ -3,41 +3,32 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Teams</h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Team Name</th>
-                        <th>Department</th>
-                        <th>Created by</th>
-                        <th>Created on</th>
-                        <th>Updated by</th>
-                        <th>Updated on</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for team in teams %}
-                    <tr>
-                        <td>{{ team.name }}</td>
-                        <td>{{ team.department.name }}</td>
-                        <td>{{ team.created_by }}</td>
-                        <td>{{ team.created_on }}</td>
-                        <td>{{ team.updated_by }}</td>
-                        <td>{{ team.updated_on }}</td>
-                        <td>
-                            <a href="{% url 'team_edit' team.id %}" class="btn btn-primary">Edit</a>
-                            <a href="{% url 'team_delete' team.id %}" class="btn btn-danger">Delete</a>                            
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <a href="{% url 'team_new' %}" class="btn btn-success">Add New</a>
-        </div>
-    </div>
+<h1>Teams</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Team ID</th>
+            <th>Team Name</th>
+            <th>Department</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in teams %}
+        <tr>
+            <td>{{ team.id }}</td>
+            <td>{{ team.name }}</td>
+            <td>{{ team.department.name }}</td>
+            <td>{{ team.description }}</td>
+            <td>
+                <a href="{% url 'team_edit' team.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'team_delete' team.id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'team_new' %}" class="btn btn-success">Add New</a>
 
 {% endblock %}

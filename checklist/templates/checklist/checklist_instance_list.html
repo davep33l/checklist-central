@@ -1,35 +1,30 @@
 {% extends 'base.html' %}
+{% block title %}Checklist Instances{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Checklist Instances{% endblock %}</title>
-</head>
+<h1>Checklist Instances</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Checklist Name</th>
+            <th>Instance Id</th>
+            <th>Created on</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for checklist in checklist_instances %}
+        <tr>
+            <td>{{ checklist.checklist_template.name }}</td>
+            <td>{{ checklist.id }}</td>
+            <td>{{ checklist.created_on }}</td>
+            <td>
+                <a href="{% url 'checklist_instance_delete' checklist.id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-<body>
-    {% block content %}
-    <h1>Checklist Instances list</h1>
-
-    {% if object_list %}
-    {% for checklist_instance in object_list %}
-    <h2>Checklist Instance Name: {{ checklist_instance.checklist_template.name }}</h2>
-    <!-- id -->
-    <p>Checklist Instance ID: {{ checklist_instance.id }}</p>
-    <p>Checklist Instance Description: {{ checklist_instance.checklist_template.description }}</p>
-    <p>Parent Checklist Template: {{ checklist_instance.checklist_template.name }}</p>
-    <p>Parent Team: {{ checklist_instance.checklist_template.team.name }}</p>
-    <p>Parent Department: {{ checklist_instance.checklist_template.team.department.name }}</p>
-
-    {% endfor %}
-    {% else %}
-    <h2>Nothing here</h2>
-    {% endif %}
-    {% endblock %}
-
-</body>
-
-</html>
+{% endblock %}

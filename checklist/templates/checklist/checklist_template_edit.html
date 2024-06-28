@@ -1,29 +1,27 @@
 {% extends 'base.html' %}
-
 {% block title %}Checklist Edit{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Checklist Template Edit</h1>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="name">Checklist Template Name</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ checklist_template.name }}">
-                    <label for="team">Team</label>
-                    <select class="form-select" id="team" name="team">
-                        {% for team in teams %}
-                        <option value="{{ team.id }}" {% if team.id == checklist.team.id %} selected {% endif %}>{{ team.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>  
+
+<h1>Checklist Template Edit</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Checklist Template Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ checklist_template.name }}">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" name="description" value="{{ checklist_template.description }}">
+        <label for="team">Team</label>
+        <select class="form-select" id="team" name="team">
+            {% for team in teams %}
+            <option value="{{ team.id }}" {% if team.id == checklist.team.id %} selected {% endif %}>{{ team.name }}</option>
+            {% endfor %}
+        </select>
     </div>
-</div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="{% url 'checklist_templates' %}" class="btn btn-secondary">Back</a>
+</form>
+
 
 
 

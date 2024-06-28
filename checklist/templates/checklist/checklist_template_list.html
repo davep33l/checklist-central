@@ -3,39 +3,34 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Checklist Templates</h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Checklist Name</th>
-                        <th>Team</th>
-                        <th>Department</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for checklist in checklist_templates %}
-                    <tr>
-                        <td>{{ checklist.name }}</td>
-                        <td>{{ checklist.team.name }}</td>
-                        <td>{{ checklist.team.department.name }}</td>
-                        <td>
-                            <a href="{% url 'checklist_template_edit' checklist.id %}" class="btn btn-primary">Edit</a>
-                            <a href="{% url 'checklist_template_delete' checklist.id %}" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <a href="{% url 'checklist_template_new' %}" class="btn btn-success">Add New</a>
-        </div>
-    </div>
-
-
-
-
+<h1>Checklist Templates</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Checklist ID</th>
+            <th>Checklist Name</th>
+            <th>Description</th>
+            <th>Department</th>
+            <th>Team</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for checklist in checklist_templates %}
+        <tr>
+            <td>{{ checklist.id }}</td>
+            <td>{{ checklist.name }}</td>
+            <td>{{ checklist.description }}</td>
+            <td>{{ checklist.team.department.name }}</td>
+            <td>{{ checklist.team.name }}</td>
+            <td>
+                <a href="{% url 'checklist_template_edit' checklist.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'checklist_template_delete' checklist.id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'checklist_template_new' %}" class="btn btn-success">Add New</a>
 
 {% endblock %}

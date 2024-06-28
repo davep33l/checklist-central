@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
-
 {% block title %}Initialise Checklists{% endblock %}
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Initialise Checklists</h1>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group mt-3">
-                    <label for="checklist_template">Checklist Template</label>
-                    <select class="form-select" id="checklist_template" name="checklist_template">
-                        {% for checklist in checklist_templates %}
-                        <option value="{{ checklist.id }}">{{ checklist.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Submit</button>
-            </form>
-        </div>
+{% if user.is_authenticated %}
+<h1>Initialise Checklists</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group mt-3">
+        <label for="checklist_template">Checklist Template</label>
+        <select class="form-select" id="checklist_template" name="checklist_template">
+            {% for checklist in checklist_templates %}
+            <option value="{{ checklist.id }}">{{ checklist.name }}</option>
+            {% endfor %}
+        </select>
     </div>
-</div>
-
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    <a href="{% url 'index' %}" class="btn btn-secondary mt-3">Back</a>
+</form>
+{% else %}
+<h1>Initialise Checklists</h1>
+<p>You need to be logged in to initialise checklists.</p>
+{% endif %}
 
 {% endblock %}

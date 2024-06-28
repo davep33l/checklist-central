@@ -1,3 +1,4 @@
+from itertools import count
 from django.shortcuts import render
 from django.views import generic
 from .models import Department, Team, ChecklistTemplate, TaskTemplate, ChecklistInstance, TaskInstance, Profile
@@ -41,6 +42,7 @@ class DepartmentList(generic.ListView):
     context_object_name = 'departments'
     template_name = 'checklist/department_list.html'
 
+
 @method_decorator(login_required, name='dispatch')
 class DepartmentEdit(SuccessMessageMixin, UpdateView):
     model = Department
@@ -75,12 +77,12 @@ class TeamList(generic.ListView):
     model = Team
     template_name = 'checklist/team_list.html'
     context_object_name = 'teams'
-    ordering = ['-name']
+    ordering = ['department__name', 'name']
 
 @method_decorator(login_required, name='dispatch')
 class TeamEdit(SuccessMessageMixin, UpdateView):
     model = Team
-    fields = ['name', 'department']
+    fields = ['name', 'department', 'description']
     template_name = 'checklist/team_edit.html'
     success_url = reverse_lazy('teams')
     success_message = "Team updated successfully"
@@ -104,7 +106,7 @@ class TeamDelete(SuccessMessageMixin, DeleteView):
 @method_decorator(login_required, name='dispatch')
 class TeamCreate(SuccessMessageMixin, CreateView):
     model = Team
-    fields = ['name', 'department']
+    fields = ['name', 'department', 'description']
     template_name = 'checklist/team_edit.html'
     success_url = reverse_lazy('teams')
     success_message = "Team created successfully"
@@ -128,7 +130,7 @@ class ChecklistTemplateList(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class ChecklistTemplateEdit(SuccessMessageMixin, UpdateView):
     model = ChecklistTemplate
-    fields = ['name', 'team']
+    fields = ['name', 'team', 'description']
     template_name = 'checklist/checklist_template_edit.html'
     success_url = reverse_lazy('checklist_templates')
     success_message = "Checklist updated successfully"
@@ -146,7 +148,7 @@ class ChecklistTemplateEdit(SuccessMessageMixin, UpdateView):
 @method_decorator(login_required, name='dispatch')
 class ChecklistTemplateCreate(SuccessMessageMixin, CreateView):
     model = ChecklistTemplate
-    fields = ['name', 'team']
+    fields = ['name', 'team','description']
     template_name = 'checklist/checklist_template_edit.html'
     success_url = reverse_lazy('checklist_templates')
     success_message = "Checklist created successfully"
@@ -246,11 +248,32 @@ def initialise_checklists(request):
 class ChecklistInstanceList(generic.ListView):
     model = ChecklistInstance
     template_name = 'checklist/checklist_instance_list.html'
+    context_object_name = 'checklist_instances'  
+
+@method_decorator(login_required, name='dispatch')
+class ChecklistInstanceDelete(SuccessMessageMixin, DeleteView):
+    model = ChecklistInstance
+    template_name = 'checklist/checklist_instance_confirm_delete.html'
+    success_url = reverse_lazy('checklist_instances')
+    success_message = "Checklist deleted successfully"
+    context_object_name = 'checklist_instance'
+ 
+
+
 
 @method_decorator(login_required, name='dispatch')
 class TaskInstanceList(generic.ListView):
     model = TaskInstance
     template_name = 'checklist/task_instance_list.html'
+    context_object_name = 'task_instances'
+
+@method_decorator(login_required, name='dispatch')
+class TaskInstanceDelete(SuccessMessageMixin, DeleteView):
+    model = TaskInstance
+    template_name = 'checklist/task_instance_confirm_delete.html'
+    success_url = reverse_lazy('task_instances')
+    success_message = "Task deleted successfully"
+    context_object_name = 'task_instance'
 
 @login_required
 def task_instance_edit(request, pk):
