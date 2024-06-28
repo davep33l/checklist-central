@@ -9,6 +9,8 @@ from django.contrib import messages
 from .forms import CustomDepartmentEditForm, CustomDepartmentCreateForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -249,4 +251,30 @@ class ChecklistInstanceList(generic.ListView):
 class TaskInstanceList(generic.ListView):
     model = TaskInstance
     template_name = 'checklist/task_instance_list.html'
+
+@login_required
+def task_instance_edit(request, pk):
+
+    task_instance = get_object_or_404(TaskInstance, pk=pk)    
+
+    if request.method == 'POST':
+        if task_instance.processed_by is None:
+            task_instance.processed_by = request.user
+            task_instance.processed_on = timezone.now()
+            task_instance.status = 'Awaiting Verification'
+            task_instance.save()
+            messages.success(request, 'Task processed successfully.')
+            return redirect('index')
+        if task_instance.verified_by is None:
+            if task_instance.processed_by == request.user:
+                messages.error(request, "You cannot verify a task you processed.")
+                return redirect('index')
+            task_instance.verified_by = request.user
+            task_instance.verified_on = timezone.now()
+            task_instance.status = 'Completed'
+            task_instance.save()
+            messages.success(request, 'Task verified successfully.')
+            return redirect('index')
+    return render(request, 'checklist/task_instance_edit.html', context={'task_instance': task_instance})
+
 

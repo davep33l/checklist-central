@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('initialise_checklists/', views.initialise_checklists, name='initialise_checklists'),
 
+    path('task_instance_edit/<int:pk>/', views.task_instance_edit, name='task_instance_edit'),
 
     path('checklist_instances/', views.ChecklistInstanceList.as_view(), name='checklist_instances'),
     path('task_instances/', views.TaskInstanceList.as_view(), name='task_instances'),

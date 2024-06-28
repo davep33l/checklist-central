@@ -8,30 +8,52 @@
         <div class="col-md-12">
             <h1>Tasks</h1>
             {% if task_instances %}
+            <div class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Checklist Name</th>
-                            <th>Checklist Instance Id</th>
-                            <th>Task</th>
-                            <th>Task Instance Id</th>
-                            <th>Task Description</th>
-                            <th>Team</th>
-                            <th>Department</th>
-                            <th>Due at</th>
-                            <th>Processed by</th>
-                            <th>Processed on</th>
-                            <th>Processor Notes</th>
-                            <th>Verified by</th>
-                            <th>Verified on</th>
-                            <th>Verifier Notes</th>
-                            <th>Status</th>
-
+                            <th class="text-nowrap">Actions</th>
+                            <th class="text-nowrap">Status</th>
+                            <th class="text-nowrap">Checklist Name</th>
+                            <th class="text-nowrap">Checklist Instance Id</th>
+                            <th class="text-nowrap">Task</th>
+                            <th class="text-nowrap">Task Instance Id</th>
+                            <th class="text-nowrap">Task Description</th>
+                            <th class="text-nowrap">Team</th>
+                            <th class="text-nowrap">Department</th>
+                            <th class="text-nowrap">Due at</th>
+                            <!-- task creation date -->
+                            <th class="text-nowrap">Created on</th>
+                            <th class="text-nowrap">Processed by</th>
+                            <th class="text-nowrap">Processed on</th>
+                            <th class="text-nowrap">Verified by</th>
+                            <th class="text-nowrap">Verified on</th>                      
                         </tr>
                     </thead>
                     <tbody>
                         {% for task_instance in task_instances %}
                         <tr>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle bg-info text-light" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        {% if task_instance.status == 'Not Started' %}
+                                        <!-- first stage process view -->
+                                        <li><a class="dropdown-item" href="{% url 'task_instance_edit' task_instance.id %}">Complete First Stage Process</a></li>
+                                        {% endif %}
+                                        {% if task_instance.status == 'Awaiting Verification' %}
+                                        <li><a class="dropdown-item" href="{% url 'task_instance_edit' task_instance.id %}">Complete Second Stage Verify</a></li>
+                                        {% endif %}
+                                        {% if task_instance.status == 'Completed' %}
+                                        <li>Task is completed</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>{{ task_instance.status }}</td>
                             <td>{{ task_instance.task_template.checklist_template.name }}</td>
                             <td>{{ task_instance.checklist_instance.id }}</td>
                             <td>{{ task_instance.task_template.name }}</td>
@@ -40,17 +62,16 @@
                             <td>{{ task_instance.task_template.checklist_template.team.name }}</td>
                             <td>{{ task_instance.task_template.checklist_template.team.department.name }}</td>
                             <td>{{ task_instance.task_template.due_at }}</td>
-                            <td>{{ task_instance.processed_by }}</td>
-                            <td>{{ task_instance.processed_at }}</td>
-                            <td>{{ task_instance.processor_notes }}</td>
-                            <td>{{ task_instance.verified_by }}</td>
-                            <td>{{ task_instance.verified_at }}</td>
-                            <td>{{ task_instance.verifier_notes }}</td>
-                            <td>{{ task_instance.status }}</td>
+                            <td>{{ task_instance.created_on }}</td>
+                            <td>{% if task_instance.processed_by %}{{ task_instance.processed_by }}{% else %}{% endif %}</td>
+                            <td>{% if task_instance.processed_on %}{{ task_instance.processed_on }}{% else %}{% endif %}</td>
+                            <td>{% if task_instance.verified_by %}{{ task_instance.verified_by }}{% else %}{% endif %}</td>
+                            <td>{% if task_instance.verified_on %}{{ task_instance.verified_on }}{% else %}{% endif %}</td>                            
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
             {% else %}
                 <p>No tasks found.</p>
             {% endif %}

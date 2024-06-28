@@ -78,13 +78,13 @@
                     <a class="nav-link" href="{% url 'account_login' %}">Login</a>
                 </li>
                 {% endif %}
-
-
-
             </ul>
             {% if user.is_authenticated %}
             <div class="ms-auto text-light">
                 <a class="btn btn-success bg-success nav-link p-1" href="{% url 'initialise_checklists' %}">Initialise Checklists</a>
+            </div>
+            <div class="ms-auto text-light">
+                <span class="navbar-text">You are logged in as <span class="fw-bolder text-success">{{ user.username }}</span></span>
             </div>
             {% endif %}
         </div>

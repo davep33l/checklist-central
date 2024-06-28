@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils import timezone
-
-# import user
 from django.contrib.auth.models import User
 
 
@@ -96,13 +94,12 @@ class TaskInstance(models.Model):
 
     task_template = models.ForeignKey(TaskTemplate, on_delete=models.CASCADE, related_name='task_instance_task_template')
     processed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_processed_by', null=True, blank=True)
-    processed_on = models.DateTimeField(auto_now=True, null=True, blank=True)
-    processor_notes = models.TextField(null=True, blank=True)
+    processed_on = models.DateTimeField(null=True, blank=True)
     verified_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='task_instance_verified_by', null=True, blank=True)
-    verified_on = models.DateTimeField(auto_now=True, null=True, blank=True)
-    verifier_notes = models.TextField(null=True, blank=True)
+    verified_on = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=100, choices=STATUS, default='Not Started')
     checklist_instance = models.ForeignKey(ChecklistInstance, on_delete=models.CASCADE, related_name='task_instance_checklist_instance', null=True, blank=True)
+    created_on = models.DateField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = 'Task Instances'
@@ -113,7 +110,6 @@ class TaskInstance(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # list of departments user can have access to
     departments = models.ManyToManyField(Department, blank=True)
 
     class Meta:
