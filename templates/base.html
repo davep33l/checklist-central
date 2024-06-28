@@ -69,7 +69,7 @@
                     </ul>
                 </li>
                 {% endif %}
-                
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
                 </li>
@@ -82,9 +82,11 @@
 
 
             </ul>
+            {% if user.is_authenticated %}
             <div class="ms-auto text-light">
                 <a class="btn btn-success bg-success nav-link p-1" href="{% url 'initialise_checklists' %}">Initialise Checklists</a>
             </div>
+            {% endif %}
         </div>
     </div>
 </nav>
@@ -100,7 +102,26 @@
 {% endfor %}
 
 
-{% block content %}{% endblock %}
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<!-- footer -->
+
+<footer class="footer mt-auto py-3 bg-dark text-light">
+    <div class="container">
+        <span class="">Checklist Central &copy; 2024</span>
+    </div>
+</footer>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
