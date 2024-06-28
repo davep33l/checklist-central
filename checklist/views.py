@@ -6,6 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.contrib import messages
+from .forms import CustomDepartmentEditForm, CustomDepartmentCreateForm
 
 
 # Create your views here.
@@ -39,7 +40,7 @@ class DepartmentList(generic.ListView):
 
 class DepartmentEdit(SuccessMessageMixin, UpdateView):
     model = Department
-    fields = ['name']
+    form_class = CustomDepartmentEditForm
     template_name = 'checklist/department_edit.html'
     context_object_name = 'department'
     success_url = reverse_lazy('departments')
@@ -55,7 +56,7 @@ class DepartmentDelete(SuccessMessageMixin, DeleteView):
 
 class DepartmentCreate(SuccessMessageMixin, CreateView):
     model = Department
-    fields = ['name']
+    form_class = CustomDepartmentCreateForm
     template_name = 'checklist/department_edit.html'
     success_url = reverse_lazy('departments')
     success_message = "Department created successfully"
