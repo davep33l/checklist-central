@@ -30,9 +30,9 @@ def index(request):
         return render(request, 'checklist/index.html')
 
     profile = Profile.objects.get(user=request.user)
-    departments = profile.departments.all()
+    department = profile.department
 
-    task_instances = TaskInstance.objects.filter(task_template__checklist_template__team__department__in=departments)
+    task_instances = TaskInstance.objects.filter(task_template__checklist_template__team__department=department)
     context = {'task_instances': task_instances,}
     return render(request, 'checklist/index.html', context)
 
