@@ -32,6 +32,8 @@
 
 ## Overview
 
+![Home Page Image](readme/testing/images/image.png)
+
 Within many businesses there is a requirement to have repeatable checks throughout the day to ensure the business runs smoothly and important tasks are completed effectively and within a timely mannar. The real world problem is that some of these checklist are housed in different media types. These can be excel spreadsheets, word documents or even printed out pieces of paper. This scenario poses a few problems; it can be time consuming to create these checklists each time they are needed, they can consume physical resources like paper and printer ink, they can be difficult to store and retrive information for audit purposes in an efficient way if they are stored on paper (and even if they are stored digitally as spreadsheets, as they could become lost, deleted, misused, overriden etc). Also some of these checks can have associated procedures related to them that may be housed in a separate place and may require a user to locate the relevant procedures to effectively complete the task. 
 
 Checklist Manager is a solution to this problem, it enables businesses to define digital checklists within a secure application. Providing features such as, Checklist and Task template definition, initialisation of a checklist template as an instance and the associated task templates as an instance at the click of a button, dual authorisation checks, custom profile for access to high level departments by restricting access to other departments, easy to use interface to add all the required information required on a checklist/task. 
