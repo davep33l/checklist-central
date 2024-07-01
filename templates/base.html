@@ -2,7 +2,6 @@
 
 {% url 'account_login' as login_url %}
 {% url 'account_logout' as logout_url %}
-<!-- signup -->
 {% url 'account_signup' as signup_url %}
 
 <!DOCTYPE html>
@@ -41,20 +40,20 @@
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="templateDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Templates
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="templateDropdown">
                         <li><a class="dropdown-item" href="{% url 'checklist_templates' %}">Checklist Templates</a></li>
                         <li><a class="dropdown-item" href="{% url 'task_templates' %}">Task Templates</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="instanceDropdow" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Instances
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="instanceDropdow">
                         <li><a class="dropdown-item" href="{% url 'checklist_instances' %}">Checklist Instances</a></li>
                         <li><a class="dropdown-item" href="{% url 'task_instances' %}">Task Instances</a></li>
                     </ul>
@@ -62,10 +61,10 @@
 
                 {% if user.is_staff %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Admin
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                         <li><a class="dropdown-item" href="{% url 'departments' %}">Departments</a></li>
                         <li><a class="dropdown-item" href="{% url 'teams' %}">Teams</a></li>
                         <li><a class="dropdown-item" href="{% url 'users' %}">Users</a></li>

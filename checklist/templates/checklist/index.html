@@ -31,11 +31,11 @@
             <tr>
                 <td>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle bg-info text-light" type="button" id="dropdownMenuButton1"
+                        <button class="btn btn-secondary dropdown-toggle bg-info text-light" type="button" id="dropdownMenuButton{{ task_instance.id }}"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Actions
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ task_instance.id }}">
                             {% if task_instance.status == 'Not Started' %}
                             <li><a class="dropdown-item" href="{% url 'task_instance_edit' task_instance.id %}">Complete First Stage Process</a></li>
                             {% endif %}
