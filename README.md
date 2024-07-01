@@ -11,10 +11,14 @@
   - [Database Desgin](#database-desgin)
     - [UML Diagram](#uml-diagram)
   - [Tools / Technology Used](#tools--technology-used)
+    - [Wireframing](#wireframing)
+    - [Diagramming](#diagramming)
     - [Development](#development)
     - [Version Control](#version-control)
     - [Backend Framework](#backend-framework)
+    - [Deployment](#deployment)
   - [Python Packages](#python-packages)
+    - [Miscellaneous](#miscellaneous)
   - [Features](#features)
   - [Future Features](#future-features)
   - [Manual Testing](#manual-testing)
@@ -22,7 +26,8 @@
     - [CSS Validation](#css-validation)
     - [Python PEP8 Validation](#python-pep8-validation)
     - [Feature / functionality testing](#feature--functionality-testing)
-  - [Deployment](#deployment)
+  - [Deployment](#deployment-1)
+    - [Pre-requisits for deployment](#pre-requisits-for-deployment)
   - [References](#references)
 
 ## Overview
@@ -78,12 +83,29 @@ Here is the design of the database. Showing the connection between the departmen
 
 ## Tools / Technology Used
 
+### Wireframing
+
+| Tool                                                 | Type             | Purpose                                       |
+| ---------------------------------------------------- | ---------------- | --------------------------------------------- |
+| [Balsamiq](https://balsamiq.com/wireframes/desktop/) | Desktop Software | Used for creating wireframes for the project. |
+
+### Diagramming
+
+| Tool                                 | Type            | Purpose                                                                      |
+| ------------------------------------ | --------------- | ---------------------------------------------------------------------------- |
+| [draw.io](https://app.diagrams.net/) | Online Software | Used to create flow charts, diagrams, and scenario diagrams for the project. |
+
+
 ### Development
 
 | Tool                                                                                 | Type             | Purpose                                                                                                                                                                                                                                  |
 | ------------------------------------------------------------------------------------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [VS Code](https://code.visualstudio.com/)                                            | Desktop Software | The application used to develop the website. Various extensions such as Markdown Preview Github Styling, Git Graph were utilized to assist with the development process.                                                                 |
 | [python](https://www.python.org/)                                                    | Desktop Software | Requirement for development.                                                                                                                                                                                                             |
+| [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) | Desktop Software | To enable the development environment match as closely as possible the deployment environment as both are Linux based. Changed mid-project from Windows to WSL in order to natively trial some python libraries and OS-specific commands |
+| [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)                       | Desktop Software | Used to provide a local deployment for easier testing (using `heroku local` command).                                                                                                                                                    |
+| PG4 Admin                      | Desktop Software | Used to access the database and see the tables created for validation during development                                              |
+
 
 ### Version Control
 
@@ -94,17 +116,32 @@ Here is the design of the database. Showing the connection between the departmen
 
 ### Backend Framework
 
-
 | Tool                                              | Type              | Purpose                                                                                                    |
 | ------------------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------- |
 | [Django (4.2.13)](https://www.djangoproject.com/) | Backend Framework | Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. |
 
+### Deployment
+
+| Tool                                                           | Type            | Purpose                     |
+| -------------------------------------------------------------- | --------------- | --------------------------- |
+| [Heroku](https://www.salesforce.com/products/heroku/overview/) | Online Software | Used to deploy the project. |
 
 ## Python Packages
 
 | Tool                                                                               | Type                   | Purpose                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [venv](https://docs.python.org/3/library/venv.html)                                | Python Package/Library | Used to create a virtual environment for package management.                                                                                                                      |
+| [Gunicorn (20.1)](https://gunicorn.org/)          | Backend Webserver | Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX.                                            |
+| [dj_database_url (2.1.0)](https://pypi.org/project/dj-database-url/)          | Python Package/Library | This simple Django utility allows you to use a database url as an environment variable within a django application  |
+
+### Miscellaneous
+
+| Tool                                                           | Type            | Purpose                                                        |
+| -------------------------------------------------------------- | --------------- | -------------------------------------------------------------- |
+| [Am I Responsive?](https://ui.dev/amiresponsive)               | Online Software | Used to create the responsive image for the top of the readme. |
+| [CI Python pep8 Linter](https://pep8ci.herokuapp.com/)         | Online Software | Used to lint my python code according to pep8 guidelines.      |
+| [HTML Validator](https://validator.w3.org/)                    | Online Software | Used to validate my html pages                                 |
+| [CSS Validator (Jigsaw)](https://jigsaw.w3.org/css-validator/) | Online Software | Used to validate my html pages                                 |
 
 ## Features
 
@@ -113,6 +150,8 @@ Here is the design of the database. Showing the connection between the departmen
 - Ability to add the department to a standard users profile so they do not see everything in the database (with both view level and template level control)
 - User sign on, sign out and register functionality
 - Ability to generate a predefined checklist and task template into its own instance
+- Only logged on users can access any functionality, and are redirected to the sign on screen if not authenticated
+
 
 
 
@@ -177,23 +216,42 @@ Here is the design of the database. Showing the connection between the departmen
 
 | Test # | Feature/functionality | Outcome | Evidence |
 |--------|------|---------|----------|
-|     1   |   That an admin user can see the admin dropdown   |  pass       |  ![feature_test_1](feature_test_1.png)      |
-|     2   |   That an standard user cannot see the admin dropdown   |  pass       |   ![feature_test_2](feature_test_2.png)    |
-|     3   |   That there is a notifcation for a user being logged in   |  pass       |    ![feature_test_2](feature_test_2.png)   |
-|     4   |   That a standard user can only see the departments they are assigned to   |  pass       |   ![feature_test_4](feature_test_4.png)  ![feature_test_4_1](feature_test_4_1.png)  |
-|     5   |   That an admin user can see all the tasks and see all the navigation   |  pass       |  ![feature_test_1](feature_test_1.png)     |
-|     6   |   That you cannot complete a task that is already complete   |  pass       |   ![feature_test_6](feature_test_6.png)    |
-|     7   |   That the same user cannot verify a task   |  pass       |    ![feature_test_7](feature_test_7.gif)   |
-|     8   |   That two different users can process and verify a task   |  pass       | ![feature_test_8](feature_test_8.gif)      |
-|     9   |   Full features of adding a department, adding a team, adding a checklist template, adding a task template and initialising a template   |  pass       |       |
-
-
+|     1   |   That an admin user can see the admin dropdown   |  pass       |  ![feature_test_1](readme/testing/images/feature_test_1.png)      |
+|     2   |   That an standard user cannot see the admin dropdown   |  pass       |   ![feature_test_2](readme/testing/images/feature_test_2.png)    |
+|     3   |   That there is a notifcation for a user being logged in   |  pass       |    ![feature_test_2](readme/testing/images/feature_test_2.png)   |
+|     4   |   That a standard user can only see the departments they are assigned to   |  pass       |   ![feature_test_4](readme/testing/images/feature_test_4.png)  ![feature_test_4_1](readme/testing/images/feature_test_4_1.png)  |
+|     5   |   That an admin user can see all the tasks and see all the navigation and the status of the task  |  pass       |  ![feature_test_1](readme/testing/images/feature_test_1.png)     |
+|     6   |   That you cannot complete a task that is already complete   |  pass       |   ![feature_test_6](readme/testing/images/feature_test_6.png)    |
+|     7   |   That the same user cannot verify a task   |  pass       |    ![feature_test_7](readme/testing/images/feature_test_7.gif)   |
+|     8   |   That two different users can process and verify a task   |  pass       | ![feature_test_8](readme/testing/images/feature_test_8.gif)      |
+|     9   |   Full features of adding a department, adding a team, adding a checklist template, adding a task template and initialising a template   |  pass       |   ![feature_test_9](readme/testing/images/feature_test_9.gif)      |
+|     10   |   Admin user can add a department to a user once they have an account on the system. No tasks are shown for that user until they have been assigned a department  |  pass       |  ![feature_test_10](readme/testing/images/feature_test_10.gif)     |
 
 
 ## Deployment
 
 
+The code for this project is housed on Github, the database is managed by the CodeInstitute and the projected was deployed to Heroku.
+
+The project can be cloned or forked from the [this](https://github.com/davep33l/checklist-central.git) link.
+
+### Pre-requisits for deployment
+
+- Create a new app within Heroku
+- Clone/Fork the repo from Github
+- Install the requirements.txt file
+- Create a Postgres Database
+- Obtain the Database URL
+- Create a local env.py file if you want to test locally with:
+  - A DATABASE_URL
+  - A SECRET_KEY
+- Run makemigrations, migrate and createsuperuser functions 
+- Link the repo code to the app in heroku
+- Set up the following environment variables in heroku
+  - A DATABASE_URL (more details below)
+  - A SECRET_KEY
+
 
 ## References
 
-The django documentation and the LMS provided me with the tools and information I needed to complete this project
+The django documentation and the LMS provided me with the tools and information I needed to complete this project. 
