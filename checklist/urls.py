@@ -33,4 +33,12 @@ urlpatterns = [
 
     path('task_instances/', views.TaskInstanceList.as_view(), name='task_instances'),
     path('task_instances/<int:pk>/delete/', views.TaskInstanceDelete.as_view(), name='task_instance_delete'),
+
+    # users
+    path('users/', views.UserList.as_view(), name='users'),
+    path('users/<int:pk>/', views.UserEdit.as_view(), name='user_edit'),
+    path('users/<int:pk>/delete/', views.UserDelete.as_view(), name='user_delete'),
+    path('users/new/', views.UserCreate.as_view(), name='user_edit'),
+
+
 ]

@@ -229,6 +229,10 @@ def initialise_checklists(request):
 
     checklist_templates = ChecklistTemplate.objects.all()
 
+    if not checklist_templates.exists():
+        messages.error(request, 'There are no checklist templates to initialise.')
+        return redirect('index')
+
     if request.method == 'POST':
         checklist = ChecklistTemplate.objects.get(pk=request.POST['checklist_template'])
         new_instance = ChecklistInstance(checklist_template=checklist, created_by=request.user)
@@ -301,3 +305,74 @@ def task_instance_edit(request, pk):
     return render(request, 'checklist/task_instance_edit.html', context={'task_instance': task_instance})
 
 
+@method_decorator(login_required, name='dispatch')
+class UserList(generic.ListView):
+    model = Profile
+    template_name = 'checklist/user_list.html'
+    context_object_name = 'profiles'  
+    ordering = ['user__username']
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Profile.objects.all().order_by('user__username')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = Profile.objects.all().order_by('user__username')
+        return context
+
+class UserEdit(SuccessMessageMixin, UpdateView):
+    model = Profile
+    fields = ['department']
+    template_name = 'checklist/user_edit.html'
+    success_url = reverse_lazy('users')
+    success_message = "User updated successfully"
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = Profile.objects.all().order_by('user__username')
+        context['departments'] = Department.objects.all()
+        return context
+    
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+@method_decorator(login_required, name='dispatch')
+class UserDelete(SuccessMessageMixin, DeleteView):
+    model = Profile
+    template_name = 'checklist/user_confirm_delete.html'
+    success_url = reverse_lazy('users')
+    success_message = "User deleted successfully"
+    context_object_name = 'profile'
+
+
+from django.contrib.auth.models import User
+
+@method_decorator(login_required, name='dispatch')
+class UserCreate(SuccessMessageMixin, CreateView):
+    model = Profile
+    fields = ['user', 'department']
+    template_name = 'checklist/user_edit.html'
+    success_url = reverse_lazy('users')
+    success_message = "User created successfully"
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = Profile.objects.all().order_by('user__username')
+        context['departments'] = Department.objects.all()
+        context['builtin_users'] = User.objects.all().order_by('username')
+        return context
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def form_valid(self, form):
+        form.instance.user = form.cleaned_data['user']
+        return super().form_valid(form)
+    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        return super().form_valid(form)

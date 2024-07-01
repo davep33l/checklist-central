@@ -1,34 +1,38 @@
 {% extends 'base.html' %}
 {% block title %}Task Instances{% endblock %}
 
+{% block content %}
 
+<h1>Task Instances</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Task Name</th>
+            <th>Instance Id</th>
+            <th>Created on</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if task_instances|length == 0 %}
+        <tr>
+            <td colspan="4">No task instances found</td>
+        </tr>
+        {% endif %}
 
-    {% block content %}
-    <h1>Task Instances list</h1>
+        {% for task in task_instances %}
+        <tr>
+            <td>{{ task.task_template.name }}</td>
+            <td>{{ task.id }}</td>
+            <td>{{ task.created_on }}</td>
+            <td>
+                <a href="{% url 'task_instance_delete' task.id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    
+{% endblock %}
 
-    {% if object_list %}
-    {% for task_instance in object_list %}
-    <h2>Task Instance Name: {{ task_instance.name }}</h2>
-    <!-- task id -->
-    <p>Task Instance ID: {{ task_instance.id }}</p>
-    <p>Task Instance Description: {{ task_instance.task_template.name }}</p>
-    <p>Parent Task Template: {{ task_instance.task_template.name }}</p>
-    <p>Parent Checklist Template: {{ task_instance.task_template.checklist_template.name }}</p>
-    <p>Parent Team: {{ task_instance.task_template.checklist_template.team.name }}</p>
-    <p>Parent Department: {{ task_instance.task_template.checklist_template.team.department.name }}</p>
-    <p>Due at: {{ task_instance.task_template.due_at }}</p>
-    <p>Task Instance Status: {{ task_instance.status }}</p>
-    <!-- processed by and notes -->
-    <p>Processed by: {{ task_instance.processed_by }}</p>
-    <p>Notes: {{ task_instance.processor_notes }}</p>
-    <!-- verified by and notes -->
-    <p>Verified by: {{ task_instance.verified_by }}</p>
-    <p>Notes: {{ task_instance.verifier_notes }}</p>
-
-    {% endfor %}
-    {% else %}
-    <h2>Nothing here</h2>
-    {% endif %}
-
-    {% endblock %}
 

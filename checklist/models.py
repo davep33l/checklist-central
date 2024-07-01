@@ -110,7 +110,7 @@ class TaskInstance(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    departments = models.ManyToManyField(Department, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='profile_department', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Profiles'
